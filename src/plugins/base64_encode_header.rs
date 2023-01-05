@@ -29,9 +29,12 @@ impl Plugin for Base64EncodeHeader {
         ServiceBuilder::new()
             .map_request(move |mut req: subgraph::Request| {
                 if let Some(header) = req.supergraph_request.headers().get("authorization") {
-                    req.subgraph_request
-                        .headers_mut()
-                        .append("Authorization64", base64::encode(header).parse().unwrap());
+                    req.subgraph_request.headers_mut().append(
+                        "Authorization64",
+                        base64::encode(header)
+                            .parse()
+                            .expect("Failed to base64 encode"),
+                    );
                 }
                 req
             })
