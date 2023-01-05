@@ -1,0 +1,8 @@
+sandbox:
+  enabled: true
+supergraph:
+  introspection: true
+homepage:
+  enabled: false
+plugins:
+  poc.base64_encode_header: {}
