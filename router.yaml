@@ -2,7 +2,9 @@ sandbox:
   enabled: true
 supergraph:
   introspection: true
+  listen: 0.0.0.0:4000
 homepage:
   enabled: false
 plugins:
   poc.base64_encode_header: {}
+  poc.base64_decode_header: {}

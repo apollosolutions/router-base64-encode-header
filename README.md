@@ -1,4 +1,4 @@
-# Solutions Repo Template
+# Router Base64 Request Plugin Sample
 
 **The code in this repository is experimental and has been provided for reference purposes only. Community feedback is welcome but this project may not be supported in the same way that repositories in the official [Apollo GraphQL GitHub organization](https://github.com/apollographql) are. If you need help you can file an issue on this repository, [contact Apollo](https://www.apollographql.com/contact-sales) to talk to an expert, or create a ticket directly in Apollo Studio.**
 
@@ -7,15 +7,16 @@
 
 ## Background
 
-This project is a sample plugin to showcase how base64 encode a header to forward to subgraph requests. 
+This project is a sample plugin to showcase how to either base64 decode or encode a header to forward to subgraph requests. 
 
 ## Usage
 
-To get started with the sample plugin, you'll need to first configure the `router.yaml` file with the below, or by using the sample `router.yaml` file within this directory.
+To get started with the sample plugin, you'll need to first configure the `router.yaml` file with the below (using one or both of the examples), or by using the sample `router.yaml` file within this directory.
 
 ```yml
 plugins:
   poc.base64_encode_header: {}
+  poc.base64_decode_header: {}
 ```
 
 By default, the plugin looks for an `Authorization` header, however you can customize this within `src/plugins/base64_encode_header.rs`.

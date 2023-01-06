@@ -28,13 +28,18 @@ impl Plugin for Base64EncodeHeader {
     fn subgraph_service(&self, _name: &str, service: subgraph::BoxService) -> subgraph::BoxService {
         ServiceBuilder::new()
             .map_request(move |mut req: subgraph::Request| {
+                // if the header exists...
                 if let Some(header) = req.supergraph_request.headers().get("authorization") {
-                    req.subgraph_request.headers_mut().append(
-                        "Authorization64Encoded",
-                        base64::encode(header)
-                            .parse()
-                            .expect("Failed to base64 encode"),
-                    );
+                    // ... we'll try to decode it...
+                    if let Ok(decode_result) = base64::decode(header) {
+                        // ... and finally try to convert the returned vec<u8> to a string for the header
+                        if let Ok(decoded_str_value) = String::from_utf8(decode_result) {
+                            req.subgraph_request.headers_mut().append(
+                                "Authorization64Decoded",
+                                decoded_str_value.parse().expect("error adding header"),
+                            );
+                        }
+                    }
                 }
                 req
             })
@@ -43,4 +48,4 @@ impl Plugin for Base64EncodeHeader {
     }
 }
 
-register_plugin!("poc", "base64_encode_header", Base64EncodeHeader);
+register_plugin!("poc", "base64_decode_header", Base64EncodeHeader);
